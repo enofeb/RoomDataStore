@@ -1,4 +1,4 @@
-package com.enofeb.roomdatastore.model
+package com.enofeb.roomdatastore.domain.model
 
 data class Note(
     val id: Int = 0,

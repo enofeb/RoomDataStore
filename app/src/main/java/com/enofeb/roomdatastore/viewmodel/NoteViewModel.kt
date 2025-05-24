@@ -6,7 +6,7 @@ import com.enofeb.roomdatastore.domain.usecase.AddNoteUseCase
 import com.enofeb.roomdatastore.domain.usecase.DeleteNoteUseCase
 import com.enofeb.roomdatastore.domain.usecase.GetNotesUseCase
 import com.enofeb.roomdatastore.domain.usecase.ThemePreferencesUseCase
-import com.enofeb.roomdatastore.model.Note
+import com.enofeb.roomdatastore.domain.model.Note
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted

@@ -18,7 +18,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.enofeb.roomdatastore.model.Note
+import com.enofeb.roomdatastore.domain.model.Note
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

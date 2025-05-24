@@ -1,6 +1,5 @@
 package com.enofeb.roomdatastore.domain.usecase
 
-import com.enofeb.roomdatastore.model.Note
 import com.enofeb.roomdatastore.model.NoteEntity
 import com.enofeb.roomdatastore.repository.NoteRepository
 import javax.inject.Inject
