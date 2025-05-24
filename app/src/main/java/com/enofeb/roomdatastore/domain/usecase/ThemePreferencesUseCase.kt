@@ -1,22 +1,22 @@
 package com.enofeb.roomdatastore.domain.usecase
 
-import android.app.Application
+import android.content.Context
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.preferencesDataStore
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class ThemePreferencesUseCase @Inject constructor(
-    private val app: Application
+    @ApplicationContext val context: Context
 ) {
-
-    fun isDarkTheme(): Flow<Boolean> = app.themeDataStore.data
+    fun isDarkTheme(): Flow<Boolean> = context.themeDataStore.data
         .map { prefs -> prefs[DARK_MODE_KEY] ?: false }
 
     suspend fun setDarkTheme(enabled: Boolean) {
-        app.themeDataStore.edit { prefs ->
+        context.themeDataStore.edit { prefs ->
             prefs[DARK_MODE_KEY] = enabled
         }
     }
@@ -26,4 +26,4 @@ class ThemePreferencesUseCase @Inject constructor(
     }
 }
 
-private val Application.themeDataStore by preferencesDataStore(name = "theme_prefs")
+private val Context.themeDataStore by preferencesDataStore(name = "theme_prefs")
