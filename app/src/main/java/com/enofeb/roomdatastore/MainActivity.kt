@@ -12,20 +12,51 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.enofeb.roomdatastore.ui.theme.RoomDataStoreTheme
+import androidx.compose.runtime.getValue
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.enofeb.roomdatastore.ui.NoteAddScreen
+import com.enofeb.roomdatastore.ui.NoteListScreen
+import com.enofeb.roomdatastore.viewmodel.NoteViewModel
+import dagger.hilt.android.AndroidEntryPoint
+import androidx.hilt.navigation.compose.hiltViewModel
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
             RoomDataStoreTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
+                val navController = rememberNavController()
+                val viewModel: NoteViewModel = hiltViewModel()
+                NavGraph(navController = navController, viewModel = viewModel)
             }
+        }
+    }
+}
+
+@Composable
+fun NavGraph(navController: NavHostController, viewModel: NoteViewModel) {
+    val notes by viewModel.notes.collectAsStateWithLifecycle()
+    NavHost(navController = navController, startDestination = "list") {
+        composable("list") {
+            NoteListScreen(
+                notes = notes,
+                onAddNoteClick = { navController.navigate("add") }
+            )
+        }
+        composable("add") {
+            NoteAddScreen(
+                onSave = { title, desc ->
+                    viewModel.addNote(title, desc)
+                    navController.popBackStack()
+                },
+                onBack = { navController.popBackStack() }
+            )
         }
     }
 }
