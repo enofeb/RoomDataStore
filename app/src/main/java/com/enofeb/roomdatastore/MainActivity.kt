@@ -46,7 +46,8 @@ fun NavGraph(navController: NavHostController, viewModel: NoteViewModel) {
         composable("list") {
             NoteListScreen(
                 notes = notes,
-                onAddNoteClick = { navController.navigate("add") }
+                onAddNoteClick = { navController.navigate("add") },
+                onDeleteNoteClick = { id -> viewModel.deleteNote(id) }
             )
         }
         composable("add") {
