@@ -36,7 +36,10 @@ fun NoteListScreen(
                 title = { Text("My Notes") },
                 actions = {
                     Row(verticalAlignment = Alignment.CenterVertically) {
-                        Text(text = if (isDarkTheme) "Dark" else "Light", style = MaterialTheme.typography.bodySmall)
+                        Text(
+                            text = if (isDarkTheme) "Dark" else "Light",
+                            style = MaterialTheme.typography.bodySmall
+                        )
                         Switch(
                             checked = isDarkTheme,
                             onCheckedChange = onThemeToggle
@@ -54,7 +57,7 @@ fun NoteListScreen(
         Box(modifier = Modifier.padding(padding)) {
             if (notes.isEmpty()) {
                 Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                    Text("Henüz not yok.")
+                    Text("No Saved Notes")
                 }
             } else {
                 LazyColumn(
@@ -105,11 +108,19 @@ fun NoteListItem(
                 overflow = TextOverflow.Ellipsis
             )
         }
+        Spacer(modifier = Modifier.width(8.dp))
+        Box(
+            modifier = Modifier
+                .size(16.dp)
+                .clip(RoundedCornerShape(50))
+                .background(note.color)
+        )
+        Spacer(modifier = Modifier.width(8.dp))
         IconButton(onClick = onDelete) {
             Icon(
                 imageVector = Icons.Default.Delete,
                 contentDescription = "Sil",
-                tint = Color.Red
+                tint = Color.Gray
             )
         }
     }
@@ -120,7 +131,12 @@ fun NoteListItem(
 fun NoteListItemPreview() {
     MaterialTheme {
         NoteListItem(
-            note = Note(id = 1, title = "Başlık", description = "Açıklama örneği burada. Çok uzun bir açıklama olursa tek satırda kalacak şekilde kısalır."),
+            note = Note(
+                id = 1,
+                title = "Başlık",
+                description = "Açıklama örneği burada. Çok uzun bir açıklama olursa tek satırda kalacak şekilde kısalır.",
+                color = Color.Green
+            ),
             backgroundColor = Color(0xFF6650a4),
             onDelete = {}
         )

@@ -33,10 +33,14 @@ class MainActivity : ComponentActivity() {
         setContent {
             val viewModel: NoteViewModel = hiltViewModel()
             val isDarkTheme by viewModel.isDarkTheme.collectAsStateWithLifecycle()
-            Log.e("ECCO",isDarkTheme.toString())
+            Log.e("ECCO", isDarkTheme.toString())
             RoomDataStoreTheme(darkTheme = isDarkTheme) {
                 val navController = rememberNavController()
-                NavGraph(navController = navController, viewModel = viewModel, isDarkTheme = isDarkTheme)
+                NavGraph(
+                    navController = navController,
+                    viewModel = viewModel,
+                    isDarkTheme = isDarkTheme
+                )
             }
         }
     }
@@ -57,8 +61,8 @@ fun NavGraph(navController: NavHostController, viewModel: NoteViewModel, isDarkT
         }
         composable("add") {
             NoteAddScreen(
-                onSave = { title, desc ->
-                    viewModel.addNote(title, desc)
+                onSave = { title, desc, priorty ->
+                    viewModel.addNote(title, desc, priorty)
                     navController.popBackStack()
                 },
                 onBack = { navController.popBackStack() }
