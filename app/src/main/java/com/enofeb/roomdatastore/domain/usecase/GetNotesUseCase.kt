@@ -12,8 +12,8 @@ import javax.inject.Inject
 class GetNotesUseCase @Inject constructor(
     private val repository: NoteRepository
 ) {
-    fun getNotes(): Flow<List<Note>> =
-        repository.getAllNotes().map { list -> list.map { it.toUiModel() } }
+
+    fun getNotes(): Flow<List<Note>> = repository.getAllNotes().map { list -> list.map { it.toUiModel() } }
 }
 
 fun NoteEntity.toUiModel() = Note(
