@@ -1,6 +1,7 @@
 package com.enofeb.roomdatastore
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -30,24 +31,28 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            RoomDataStoreTheme {
+            val viewModel: NoteViewModel = hiltViewModel()
+            val isDarkTheme by viewModel.isDarkTheme.collectAsStateWithLifecycle()
+            Log.e("ECCO",isDarkTheme.toString())
+            RoomDataStoreTheme(darkTheme = isDarkTheme) {
                 val navController = rememberNavController()
-                val viewModel: NoteViewModel = hiltViewModel()
-                NavGraph(navController = navController, viewModel = viewModel)
+                NavGraph(navController = navController, viewModel = viewModel, isDarkTheme = isDarkTheme)
             }
         }
     }
 }
 
 @Composable
-fun NavGraph(navController: NavHostController, viewModel: NoteViewModel) {
+fun NavGraph(navController: NavHostController, viewModel: NoteViewModel, isDarkTheme: Boolean) {
     val notes by viewModel.notes.collectAsStateWithLifecycle()
     NavHost(navController = navController, startDestination = "list") {
         composable("list") {
             NoteListScreen(
                 notes = notes,
                 onAddNoteClick = { navController.navigate("add") },
-                onDeleteNoteClick = { id -> viewModel.deleteNote(id) }
+                onDeleteNoteClick = { id -> viewModel.deleteNote(id) },
+                isDarkTheme = isDarkTheme,
+                onThemeToggle = { enabled -> viewModel.setDarkTheme(enabled) }
             )
         }
         composable("add") {

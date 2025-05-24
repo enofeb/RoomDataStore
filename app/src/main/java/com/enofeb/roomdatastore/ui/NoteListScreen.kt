@@ -25,12 +25,25 @@ import com.enofeb.roomdatastore.model.Note
 fun NoteListScreen(
     notes: List<Note>,
     onAddNoteClick: () -> Unit,
-    onDeleteNoteClick: (Int) -> Unit = {}
+    onDeleteNoteClick: (Int) -> Unit = {},
+    isDarkTheme: Boolean,
+    onThemeToggle: (Boolean) -> Unit
 ) {
     val fabColor = MaterialTheme.colorScheme.primary
     Scaffold(
         topBar = {
-            TopAppBar(title = { Text("My Notes") })
+            TopAppBar(
+                title = { Text("My Notes") },
+                actions = {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Text(text = if (isDarkTheme) "Dark" else "Light", style = MaterialTheme.typography.bodySmall)
+                        Switch(
+                            checked = isDarkTheme,
+                            onCheckedChange = onThemeToggle
+                        )
+                    }
+                }
+            )
         },
         floatingActionButton = {
             FloatingActionButton(onClick = onAddNoteClick, containerColor = fabColor) {
