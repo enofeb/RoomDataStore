@@ -19,7 +19,7 @@ fun NoteAddScreen(
 ) {
     var title by remember { mutableStateOf("") }
     var description by remember { mutableStateOf("") }
-    var selectedPriority by remember { mutableStateOf(Priority.LOW) }
+    var selectedPriority by remember { mutableStateOf(Priority.HIGH) }
 
     Scaffold(
         topBar = {

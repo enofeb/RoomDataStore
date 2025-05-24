@@ -14,6 +14,7 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
+
     @Provides
     @Singleton
     fun provideDatabase(app: Application): NoteDatabase =
@@ -21,8 +22,4 @@ object AppModule {
 
     @Provides
     fun provideNoteDao(db: NoteDatabase): NoteDao = db.noteDao()
-
-    @Provides
-    @Singleton
-    fun provideNoteRepository(noteDao: NoteDao): NoteRepository = NoteRepository(noteDao)
 } 
