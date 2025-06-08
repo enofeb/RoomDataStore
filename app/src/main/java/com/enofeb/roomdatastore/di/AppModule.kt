@@ -2,9 +2,9 @@ package com.enofeb.roomdatastore.di
 
 import android.app.Application
 import androidx.room.Room
+import androidx.work.WorkManager
 import com.enofeb.roomdatastore.model.NoteDao
 import com.enofeb.roomdatastore.model.NoteDatabase
-import com.enofeb.roomdatastore.repository.NoteRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -22,4 +22,8 @@ object AppModule {
 
     @Provides
     fun provideNoteDao(db: NoteDatabase): NoteDao = db.noteDao()
+
+    @Provides
+    @Singleton
+    fun provideWorkManager(app: Application): WorkManager = WorkManager.getInstance(app)
 } 
