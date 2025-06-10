@@ -18,15 +18,12 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.enofeb.roomdatastore.domain.model.Note
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NoteListScreen(
-    notes: List<Note>,
     onAddNoteClick: () -> Unit,
     onDeleteNoteClick: (Int) -> Unit = {},
-    isDarkTheme: Boolean,
     onThemeToggle: (Boolean) -> Unit
 ) {
     val fabColor = MaterialTheme.colorScheme.primary
@@ -37,11 +34,11 @@ fun NoteListScreen(
                 actions = {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Text(
-                            text = if (isDarkTheme) "Dark" else "Light",
+                            text = if (false) "Dark" else "Light",
                             style = MaterialTheme.typography.bodySmall
                         )
                         Switch(
-                            checked = isDarkTheme,
+                            checked = false,
                             onCheckedChange = onThemeToggle
                         )
                     }
@@ -55,33 +52,13 @@ fun NoteListScreen(
         }
     ) { padding ->
         Box(modifier = Modifier.padding(padding)) {
-            if (notes.isEmpty()) {
-                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                    Text("No Saved Notes")
-                }
-            } else {
-                LazyColumn(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(8.dp),
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    items(notes) { note ->
-                        NoteListItem(
-                            note = note,
-                            backgroundColor = fabColor,
-                            onDelete = { onDeleteNoteClick(note.id) }
-                        )
-                    }
-                }
-            }
+
         }
     }
 }
 
 @Composable
 fun NoteListItem(
-    note: Note,
     backgroundColor: Color,
     onDelete: () -> Unit
 ) {
@@ -95,11 +72,11 @@ fun NoteListItem(
     ) {
         Column(modifier = Modifier.weight(1f)) {
             Text(
-                text = note.title,
+                text = "",
                 style = MaterialTheme.typography.titleMedium
             )
             Text(
-                text = note.description,
+                text = "",
                 style = MaterialTheme.typography.bodySmall.copy(
                     fontSize = 13.sp,
                     color = Color.Gray
@@ -113,7 +90,7 @@ fun NoteListItem(
             modifier = Modifier
                 .size(16.dp)
                 .clip(RoundedCornerShape(50))
-                .background(note.color)
+                //.background(Color)
         )
         Spacer(modifier = Modifier.width(8.dp))
         IconButton(onClick = onDelete) {
@@ -131,12 +108,6 @@ fun NoteListItem(
 fun NoteListItemPreview() {
     MaterialTheme {
         NoteListItem(
-            note = Note(
-                id = 1,
-                title = "Başlık",
-                description = "Açıklama örneği burada. Çok uzun bir açıklama olursa tek satırda kalacak şekilde kısalır.",
-                color = Color.Green
-            ),
             backgroundColor = Color(0xFF6650a4),
             onDelete = {}
         )

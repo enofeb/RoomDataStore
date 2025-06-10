@@ -32,14 +32,12 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             val viewModel: NoteViewModel = hiltViewModel()
-            val isDarkTheme by viewModel.isDarkTheme.collectAsStateWithLifecycle()
-            Log.e("ECCO", isDarkTheme.toString())
-            RoomDataStoreTheme(darkTheme = isDarkTheme) {
+
+            RoomDataStoreTheme() {
                 val navController = rememberNavController()
                 NavGraph(
                     navController = navController,
-                    viewModel = viewModel,
-                    isDarkTheme = isDarkTheme
+                    viewModel = viewModel
                 )
             }
         }
@@ -47,22 +45,18 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun NavGraph(navController: NavHostController, viewModel: NoteViewModel, isDarkTheme: Boolean) {
-    val notes by viewModel.notes.collectAsStateWithLifecycle()
+fun NavGraph(navController: NavHostController, viewModel: NoteViewModel) {
     NavHost(navController = navController, startDestination = "list") {
         composable("list") {
             NoteListScreen(
-                notes = notes,
                 onAddNoteClick = { navController.navigate("add") },
-                onDeleteNoteClick = { id -> viewModel.deleteNote(id) },
-                isDarkTheme = isDarkTheme,
-                onThemeToggle = { enabled -> viewModel.setDarkTheme(enabled) }
+                onDeleteNoteClick = { },
+                onThemeToggle = { enabled -> }
             )
         }
         composable("add") {
             NoteAddScreen(
-                onSave = { title, desc, priorty ->
-                    viewModel.addNote(title, desc, priorty)
+                onSave = { _, _ ->
                     navController.popBackStack()
                 },
                 onBack = { navController.popBackStack() }

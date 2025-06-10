@@ -9,17 +9,15 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.enofeb.roomdatastore.model.Priority
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NoteAddScreen(
-    onSave: (String, String, Priority) -> Unit,
+    onSave: (String, String) -> Unit,
     onBack: () -> Unit
 ) {
     var title by remember { mutableStateOf("") }
     var description by remember { mutableStateOf("") }
-    var selectedPriority by remember { mutableStateOf(Priority.HIGH) }
 
     Scaffold(
         topBar = {
@@ -58,20 +56,12 @@ fun NoteAddScreen(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceEvenly
             ) {
-                Priority.entries.forEach { priority ->
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        RadioButton(
-                            selected = selectedPriority == priority,
-                            onClick = { selectedPriority = priority }
-                        )
-                        Text(priority.name.lowercase().replaceFirstChar { it.uppercase() })
-                    }
-                }
+
             }
             Spacer(modifier = Modifier.height(24.dp))
             Button(
                 onClick = {
-                    onSave(title, description, selectedPriority)
+                    onSave(title, description)
                 },
                 modifier = Modifier.fillMaxWidth(),
                 enabled = title.isNotBlank() && description.isNotBlank()
