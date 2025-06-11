@@ -1,10 +1,10 @@
 package com.enofeb.roomdatastore.ui
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
@@ -27,6 +27,7 @@ fun NoteListScreen(
     onThemeToggle: (Boolean) -> Unit
 ) {
     val fabColor = MaterialTheme.colorScheme.primary
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -52,7 +53,13 @@ fun NoteListScreen(
         }
     ) { padding ->
         Box(modifier = Modifier.padding(padding)) {
+            if (true) {
+                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                    Text(text = "No notes yet!")
+                }
+            } else {
 
+            }
         }
     }
 }
@@ -60,7 +67,7 @@ fun NoteListScreen(
 @Composable
 fun NoteListItem(
     backgroundColor: Color,
-    onDelete: () -> Unit
+    onDelete: (Int) -> Unit = {}
 ) {
     Row(
         modifier = Modifier
@@ -93,7 +100,7 @@ fun NoteListItem(
                 //.background(Color)
         )
         Spacer(modifier = Modifier.width(8.dp))
-        IconButton(onClick = onDelete) {
+        IconButton(onClick = { onDelete.invoke(0) }) {
             Icon(
                 imageVector = Icons.Default.Delete,
                 contentDescription = "Sil",

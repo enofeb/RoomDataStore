@@ -57,6 +57,14 @@ fun NoteAddScreen(
                 horizontalArrangement = Arrangement.SpaceEvenly
             ) {
 
+                Row(verticalAlignment = Alignment.CenterVertically) {
+//                    RadioButton(
+//                        selected = false,
+//                        onClick = {  }
+//                    )
+                    Text(text = "")
+                }
+
             }
             Spacer(modifier = Modifier.height(24.dp))
             Button(
