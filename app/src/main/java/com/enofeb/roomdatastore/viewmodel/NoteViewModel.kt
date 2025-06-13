@@ -6,7 +6,6 @@ import com.enofeb.roomdatastore.domain.usecase.AddNoteUseCase
 import com.enofeb.roomdatastore.domain.usecase.DeleteNoteUseCase
 import com.enofeb.roomdatastore.domain.usecase.GetNotesUseCase
 import com.enofeb.roomdatastore.domain.usecase.ThemePreferencesUseCase
-import com.enofeb.roomdatastore.domain.usecase.SetReminderNotificationUseCase
 import com.enofeb.roomdatastore.domain.model.Note
 import com.enofeb.roomdatastore.model.Priority
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -26,7 +25,6 @@ class NoteViewModel @Inject constructor(
     private val deleteNoteUseCase: DeleteNoteUseCase,
     private val getNotesUseCase: GetNotesUseCase,
     private val themePreferencesUseCase: ThemePreferencesUseCase,
-    private val setReminderNotificationUseCase: SetReminderNotificationUseCase
 ) : ViewModel() {
 
     private val _notes = MutableStateFlow<List<Note>>(emptyList())
@@ -46,9 +44,6 @@ class NoteViewModel @Inject constructor(
     fun addNote(title: String, description: String, priority: Priority) {
         viewModelScope.launch {
             addNoteUseCase.addNote(title = title, description = description, priority = priority)
-            if (_notes.value.isEmpty()) {
-                setReminderNotificationUseCase()
-            }
         }
     }
 

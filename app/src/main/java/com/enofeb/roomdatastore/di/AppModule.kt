@@ -22,8 +22,4 @@ object AppModule {
 
     @Provides
     fun provideNoteDao(db: NoteDatabase): NoteDao = db.noteDao()
-
-    @Provides
-    @Singleton
-    fun provideWorkManager(app: Application): WorkManager = WorkManager.getInstance(app)
 } 
