@@ -33,7 +33,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             val viewModel: NoteViewModel = hiltViewModel()
             val isDarkTheme by viewModel.isDarkTheme.collectAsStateWithLifecycle()
-            Log.e("ECCO", isDarkTheme.toString())
+
             RoomDataStoreTheme(darkTheme = isDarkTheme) {
                 val navController = rememberNavController()
                 NavGraph(
